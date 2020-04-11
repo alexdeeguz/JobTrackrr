@@ -15,6 +15,8 @@ class User < ApplicationRecord
     validates :password_digest, presence: true
     before_validation :ensure_session_token
 
+    attr_reader :password
+
     def self.find_by_credentials(username, password)
         user = User.find_by(username: username)
         return user if user && user.is_password?(password)    
