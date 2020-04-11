@@ -40,4 +40,8 @@ class User < ApplicationRecord
         self.save!
         self.session_token
     end
+
+    has_many :job_applications,
+        foreign_key: :user_id,
+        class_name: :JobApplication
 end

@@ -503,13 +503,15 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
         placeholder: "Username",
         onChange: function onChange(e) {
           return _this3.updateField(e, "username");
-        }
+        },
+        value: this.state.username
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         placeholder: "Password",
         onChange: function onChange(e) {
           return _this3.updateField(e, "password");
-        }
+        },
+        value: this.state.password
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, this.props.formType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.errors));
