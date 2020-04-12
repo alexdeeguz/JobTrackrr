@@ -23,11 +23,10 @@ class JobApplicationIndexItem extends React.Component {
             application_id: this.props.application.id
         }
         this.props.createInterview(interview)
-            .then(() => this.props.history.push('/interviews'))
+            .then((res) => this.props.history.push(`/interviews/${res.interview.id}`))
     }
 
     render() {
-        console.log(this.props)
         const { application_date, company_name, position, job_posting_url, company_site_url, status } = this.props.application
         return (
             <div className="job-app">

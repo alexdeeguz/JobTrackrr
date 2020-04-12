@@ -70,7 +70,6 @@ class JobApplicationIndex extends React.Component {
 
     render() {
         const offers = this.props.jobApplications ? this.props.jobApplications.filter(el => el.status === "Offered").length : ""
-        console.log(this.props.jobApplications)
         const applications = this.state.sort === "status" ? this.props.jobApplications.sort((a, b) => {
             if (a.status < b.status) return -1
             if (a.status > b.status) return 1

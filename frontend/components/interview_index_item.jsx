@@ -16,14 +16,23 @@ class InterviewIndexItem extends React.Component {
         if (hours > 12) {
             hours = hours % 12
             daylight = "PM"
+        } else if (hours === 12) {
+            hours = String(12)
+            daylight = "PM"
+        } else if (hours === 0) {
+            hours = String(12)
+            daylight = "AM"
         } else {
             daylight = "AM"
+        }
+
+        if (minutes < 9) {
+            minutes = "0" + String(minutes)
         }
         return `${hours}:${minutes} ${daylight}`
     }
 
     render() {
-        console.log(this.props)
         const { date, time, interview_type, application_id } = this.props.interview
         const name = this.props.applications[application_id] ? this.props.applications[application_id].company_name : ""
         return (

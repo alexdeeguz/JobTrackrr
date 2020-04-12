@@ -855,8 +855,18 @@ var InterviewIndexItem = /*#__PURE__*/function (_React$Component) {
       if (hours > 12) {
         hours = hours % 12;
         daylight = "PM";
+      } else if (hours === 12) {
+        hours = String(12);
+        daylight = "PM";
+      } else if (hours === 0) {
+        hours = String(12);
+        daylight = "AM";
       } else {
         daylight = "AM";
+      }
+
+      if (minutes < 9) {
+        minutes = "0" + String(minutes);
       }
 
       return "".concat(hours, ":").concat(minutes, " ").concat(daylight);
@@ -864,7 +874,6 @@ var InterviewIndexItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props);
       var _this$props$interview = this.props.interview,
           date = _this$props$interview.date,
           time = _this$props$interview.time,
@@ -976,7 +985,6 @@ var InterviewShow = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      console.log(this.state);
       var id = this.props.match.params.id;
       var interview = this.props.interviews[id];
       var application = interview ? this.props.applications[interview.application_id] : "";
@@ -1087,14 +1095,13 @@ var JobApplicationIndexItem = /*#__PURE__*/function (_React$Component) {
       var interview = {
         application_id: this.props.application.id
       };
-      this.props.createInterview(interview).then(function () {
-        return _this2.props.history.push('/interviews');
+      this.props.createInterview(interview).then(function (res) {
+        return _this2.props.history.push("/interviews/".concat(res.interview.id));
       });
     }
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props);
       var _this$props$applicati = this.props.application,
           application_date = _this$props$applicati.application_date,
           company_name = _this$props$applicati.company_name,
@@ -1271,7 +1278,6 @@ var JobApplicationIndex = /*#__PURE__*/function (_React$Component) {
       var offers = this.props.jobApplications ? this.props.jobApplications.filter(function (el) {
         return el.status === "Offered";
       }).length : "";
-      console.log(this.props.jobApplications);
       var applications = this.state.sort === "status" ? this.props.jobApplications.sort(function (a, b) {
         if (a.status < b.status) return -1;
         if (a.status > b.status) return 1;

@@ -9,7 +9,6 @@ class InterviewShow extends React.Component {
             time: "",
             interview_type: ""
         }
-
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -32,7 +31,6 @@ class InterviewShow extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         const id = this.props.match.params.id
         const interview = this.props.interviews[id]
         const application = interview ? this.props.applications[interview.application_id] : ""
