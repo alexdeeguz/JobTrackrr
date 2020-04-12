@@ -6,6 +6,7 @@ import HomeContainer from './containers/home_container'
 import LoginContainer from './containers/login_container'
 import SignupContainer from './containers/signup_container'
 import JobApplicationIndexContainer from './containers/job_application_index_container'
+import InterviewIndexContainer from './containers/interview_index_container'
 const App = () => {
     return (
         <div>
@@ -13,6 +14,7 @@ const App = () => {
                 <AuthRoute path='/login' component={LoginContainer}/>
                 <AuthRoute path='/signup' component={SignupContainer}/>
                 <ProtectedRoute path='/applications' component={JobApplicationIndexContainer}/>
+                <ProtectedRoute path='/interviews' component={InterviewIndexContainer}/>
                 <ProtectedRoute path='/' component={HomeContainer}/>
             </Switch>
         </div>

@@ -86,6 +86,84 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/interview_actions.js":
+/*!***********************************************!*\
+  !*** ./frontend/actions/interview_actions.js ***!
+  \***********************************************/
+/*! exports provided: RECEIVE_ALL_INTERVIEWS, RECEIVE_INTERVIEW, REMOVE_INTERVIEW, getAllInterviews, getInterview, deleteInterview, updateInterview, createInterview */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ALL_INTERVIEWS", function() { return RECEIVE_ALL_INTERVIEWS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_INTERVIEW", function() { return RECEIVE_INTERVIEW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_INTERVIEW", function() { return REMOVE_INTERVIEW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllInterviews", function() { return getAllInterviews; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInterview", function() { return getInterview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInterview", function() { return deleteInterview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInterview", function() { return updateInterview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createInterview", function() { return createInterview; });
+/* harmony import */ var _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/interview_utils */ "./frontend/util/interview_utils.js");
+
+var RECEIVE_ALL_INTERVIEWS = "RECEIVE_ALL_INTERVIEWS";
+var RECEIVE_INTERVIEW = "RECEIVE_INTERVIEW";
+var REMOVE_INTERVIEW = "REMOVE_INTERVIEW";
+
+var receiveAllInterviews = function receiveAllInterviews(interviews) {
+  return {
+    type: RECEIVE_ALL_INTERVIEWS,
+    interviews: interviews
+  };
+};
+
+var receiveInterview = function receiveInterview(interview) {
+  return {
+    type: RECEIVE_INTERVIEW,
+    interview: interview
+  };
+};
+
+var removeInterview = function removeInterview(id) {
+  return {
+    type: REMOVE_INTERVIEW,
+    id: id
+  };
+};
+
+var getAllInterviews = function getAllInterviews() {
+  return function (dispatch) {
+    return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["fetchAllInterviews"]().then(function (interviews) {
+      return dispatch(receiveAllInterviews(interviews));
+    });
+  };
+};
+var getInterview = function getInterview(id) {
+  return function (dispatch) {
+    return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["fetchInterview"](id).then(function (interview) {
+      return dispatch(receiveInterview(interview));
+    });
+  };
+};
+var deleteInterview = function deleteInterview(id) {
+  return function (dispatch) {
+    return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["deleteInterview"](id).then(function () {
+      return dispatch(removeInterview());
+    });
+  };
+};
+var updateInterview = function updateInterview(id, interview) {
+  return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["updateInterview"](id, interview).then(function (updatedInterview) {
+    return dispatch(receiveInterview(updatedInterview));
+  });
+};
+var createInterview = function createInterview(interview) {
+  return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["createInterview"](interview).then(function (createdInterview) {
+    return dispatch(receiveInterview(createdInterview));
+  });
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/job_application_actions.js":
 /*!*****************************************************!*\
   !*** ./frontend/actions/job_application_actions.js ***!
@@ -273,6 +351,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _containers_login_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./containers/login_container */ "./frontend/components/containers/login_container.jsx");
 /* harmony import */ var _containers_signup_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./containers/signup_container */ "./frontend/components/containers/signup_container.jsx");
 /* harmony import */ var _containers_job_application_index_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./containers/job_application_index_container */ "./frontend/components/containers/job_application_index_container.jsx");
+/* harmony import */ var _containers_interview_index_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./containers/interview_index_container */ "./frontend/components/containers/interview_index_container.jsx");
+
 
 
 
@@ -291,6 +371,9 @@ var App = function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/applications",
     component: _containers_job_application_index_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    path: "/interviews",
+    component: _containers_interview_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/",
     component: _containers_home_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -332,6 +415,49 @@ var mDTP = function mDTP(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_home__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/containers/interview_index_container.jsx":
+/*!**********************************************************************!*\
+  !*** ./frontend/components/containers/interview_index_container.jsx ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _interview_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../interview_index */ "./frontend/components/interview_index.jsx");
+/* harmony import */ var _actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/interview_actions */ "./frontend/actions/interview_actions.js");
+
+
+
+
+var mSTP = function mSTP(state) {
+  return {
+    interviews: Object.values(state.entities.interviews)
+  };
+};
+
+var mDTP = function mDTP(dispatch) {
+  return {
+    getAllInterviews: function getAllInterviews() {
+      return dispatch(Object(_actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__["getAllInterviews"])());
+    },
+    scheduleInterview: function scheduleInterview(interview) {
+      return dispatch(Object(_actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__["createInterview"])(interview));
+    },
+    updateInterview: function updateInterview(id, interview) {
+      return dispatch(Object(_actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__["updateInterview"])(id, interview));
+    },
+    cancelInterview: function cancelInterview(id) {
+      return dispatch(Object(_actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__["deleteInterview"])(id));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_interview_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -526,6 +652,66 @@ var Home = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Home);
+
+/***/ }),
+
+/***/ "./frontend/components/interview_index.jsx":
+/*!*************************************************!*\
+  !*** ./frontend/components/interview_index.jsx ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var InterviewIndex = /*#__PURE__*/function (_React$Component) {
+  _inherits(InterviewIndex, _React$Component);
+
+  var _super = _createSuper(InterviewIndex);
+
+  function InterviewIndex(props) {
+    _classCallCheck(this, InterviewIndex);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(InterviewIndex, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "INTERVIEWS");
+    }
+  }]);
+
+  return InterviewIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (InterviewIndex);
 
 /***/ }),
 
@@ -1051,12 +1237,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _job_application_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./job_application_reducer */ "./frontend/reducers/job_application_reducer.js");
+/* harmony import */ var _interview_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interview_reducer */ "./frontend/reducers/interview_reducer.js");
+
 
 
 
 var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  jobApplications: _job_application_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  jobApplications: _job_application_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  interviews: _interview_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
 
@@ -1079,6 +1268,45 @@ var ErrorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
   session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (ErrorsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/interview_reducer.js":
+/*!************************************************!*\
+  !*** ./frontend/reducers/interview_reducer.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_interview_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/interview_actions */ "./frontend/actions/interview_actions.js");
+
+
+var InterviewReducer = function InterviewReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_interview_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_INTERVIEWS"]:
+      return action.interviews;
+
+    case _actions_interview_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_INTERVIEW"]:
+      newState[action.interview.id] = action.interview;
+      return newState;
+
+    case _actions_interview_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_INTERVIEW"]:
+      delete newState[action.id];
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (InterviewReducer);
 
 /***/ }),
 
@@ -1278,6 +1506,59 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/interview_utils.js":
+/*!******************************************!*\
+  !*** ./frontend/util/interview_utils.js ***!
+  \******************************************/
+/*! exports provided: fetchAllInterviews, fetchInterview, createInterview, deleteInterview, updateInterview */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllInterviews", function() { return fetchAllInterviews; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchInterview", function() { return fetchInterview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createInterview", function() { return createInterview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInterview", function() { return deleteInterview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInterview", function() { return updateInterview; });
+var fetchAllInterviews = function fetchAllInterviews() {
+  return $.ajax({
+    method: "GET",
+    url: '/api/interviews'
+  });
+};
+var fetchInterview = function fetchInterview(id) {
+  return $.ajax({
+    method: "GET",
+    url: "/api/interviews/".concat(id)
+  });
+};
+var createInterview = function createInterview(interview) {
+  return $.ajax({
+    method: "POST",
+    url: '/api/interviews',
+    data: {
+      interview: interview
+    }
+  });
+};
+var deleteInterview = function deleteInterview(id) {
+  return $.ajax({
+    method: "DELETE",
+    url: "/api/interviews/".concat(id)
+  });
+};
+var updateInterview = function updateInterview(id, interview) {
+  return $.ajax({
+    method: "PATCH",
+    url: "/api/interviews/".concat(id),
+    data: {
+      interview: interview
+    }
+  });
+};
 
 /***/ }),
 
