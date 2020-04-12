@@ -6,10 +6,11 @@ class InterviewShow extends React.Component {
 
         this.state = {
             date: "",
-            time: "",
+            time: "12:00",
             interview_type: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.cancelInterview = this.cancelInterview.bind(this)
     }
 
     componentWillMount() {
@@ -30,6 +31,12 @@ class InterviewShow extends React.Component {
             .then(() => this.props.history.push('/interviews'))
     }
 
+    cancelInterview(e) {
+        e.preventDefault()
+        this.props.cancelInterview(this.props.match.params.id)
+            .then(() => this.props.history.push('/interviews'))
+    }
+
     render() {
         const id = this.props.match.params.id
         const interview = this.props.interviews[id]
@@ -42,10 +49,11 @@ class InterviewShow extends React.Component {
                 Time: <input type="time" value={this.state.time} onChange={(e) => this.updateField(e, "time")}/><br/>
                 <select onChange={(e) => this.updateField(e, "interview_type")}>
                     <option disabled selected>--Interview Type</option>
-                    <option value="phone">Phone</option>
-                    <option value="onsite">On-site</option>
+                    <option value="Phone Screen">Phone</option>
+                    <option value="On-site">On-site</option>
                 </select>
-                <button onClick={this.handleSubmit}>Update Interview</button>
+                <button onClick={this.handleSubmit}>Schedule Interview</button>
+                <button onClick={this.cancelInterview}>Cancel Interview</button>
             </div>
         )
     }

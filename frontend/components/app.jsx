@@ -17,7 +17,7 @@ const App = () => {
                 <ProtectedRoute path='/applications' component={JobApplicationIndexContainer}/>
                 <ProtectedRoute path='/interviews/:id' component={InterviewShowContainer}/>
                 <ProtectedRoute path='/interviews' component={InterviewIndexContainer}/>
-                <ProtectedRoute path='/' component={HomeContainer}/>
+                <ProtectedRoute path='/' component={JobApplicationIndexContainer}/>
             </Switch>
         </div>
     )

@@ -3,6 +3,13 @@ import React from 'react'
 class InterviewIndexItem extends React.Component {
     constructor(props) {
         super(props)
+        this.cancelInterview = this.cancelInterview.bind(this)
+    }
+
+    cancelInterview(e) {
+        e.preventDefault()
+        this.props.cancelInterview(this.props.interview.id)
+            .then(() => this.props.getAllInterviews())
     }
 
     convertTime(str) {
@@ -41,6 +48,7 @@ class InterviewIndexItem extends React.Component {
                 <p className="grid2">{date}</p>
                 <p className="grid3">{this.convertTime(time)}</p>
                 <p className="grid4">{interview_type}</p>
+                <p id="cancel-button" className="grid5" onClick={this.cancelInterview}>Cancel Interview</p>
             </div>
         )
     }

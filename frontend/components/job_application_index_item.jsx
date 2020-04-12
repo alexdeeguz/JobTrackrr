@@ -35,13 +35,15 @@ class JobApplicationIndexItem extends React.Component {
                     {status === "Applied" ? "" : <option value="Applied">Applied</option>}
                     {status === "Offered" ? "" : <option value="Offered">Offered</option>}
                     {status === "Rejected" ? "" : <option value="Rejected">Rejected</option>}
+                    {status === "On-site" ? "" : <option value="On-site">On-site</option>}
+                    {status === "Phone Screen" ? "" : <option value="Phone Screen">Phone Screen</option>}
                 </select>
                 <p className="grid2">{application_date}</p>
                 <p className="grid3">{company_name}</p>
                 <p className="grid4">{position}</p>
                 <p className="grid5"><a href={job_posting_url}>Job Posting</a></p>
                 <p className="grid6"><a href={company_site_url}>Company Site</a></p>
-                <p id="got-interview" onClick={this.addInterview} className="grid7">Got an interview</p>
+                <p id="got-interview" onClick={this.addInterview} className="grid7">Schedule Interview</p>
             </div>
         )
     }

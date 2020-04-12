@@ -1,5 +1,6 @@
 import React from 'react'
 import JobApplicationIndexItem from './job_application_index_item'
+import Header from './header'
 
 class JobApplicationIndex extends React.Component {
     constructor(props) {
@@ -81,9 +82,10 @@ class JobApplicationIndex extends React.Component {
         })
         return (
             <div>
+                <Header history={this.props.history}/>
                 <div className="add-and-details-container">
                     <div className="form-container">
-                        <h1>QUICK ADD</h1>
+                        <h2>QUICK ADD</h2>
                         <form className="form" onSubmit={this.addApplication}>
                             <input type="date" placeholder="Application Date" onChange={(e) => this.updateField(e, "date")} value={this.state.application_date}/>                           
                             <input type="text" placeholder="Company Name" onChange={(e) => this.updateField(e, "company_name")} value={this.state.company_name}/>                            
@@ -94,7 +96,7 @@ class JobApplicationIndex extends React.Component {
                         </form>
                     </div>
                     <div className="details">
-                        <h1>DETAILS</h1>
+                        <h2>DETAILS</h2>
                         <h3>Applications Submitted: {this.props.jobApplications.length}</h3>
                         <h3>Phone Screens:</h3>
                         <h3>On-sites:</h3>

@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.header > h1 {
+    cursor: pointer;
+    padding: 20px;
+}
+
+.selected {
+    background-color: #ffffff;
+    box-shadow: 1px 2px;
+    cursor: pointer;
+    color: blue;
+}
+
+.non-selected {
+    cursor: pointer;
+    color: black;
+}
