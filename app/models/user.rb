@@ -44,4 +44,8 @@ class User < ApplicationRecord
     has_many :job_applications,
         foreign_key: :user_id,
         class_name: :JobApplication
+
+    has_many :interviews,
+        through: :job_applications,
+        source: :interviews
 end

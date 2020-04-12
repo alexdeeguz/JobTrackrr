@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: interviews
+#
+#  id             :bigint           not null, primary key
+#  date           :date
+#  time           :time
+#  type           :string
+#  application_id :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
+one:
+  date: 2020-04-11
+  time: 2020-04-11 19:06:02
+  type: 
+  application_id: 1
+
+two:
+  date: 2020-04-11
+  time: 2020-04-11 19:06:02
+  type: 
+  application_id: 1

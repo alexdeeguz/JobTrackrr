@@ -1,0 +1,1 @@
+json.extract! interview, :id, :date, :time, :type, :application_id

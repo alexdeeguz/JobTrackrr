@@ -19,4 +19,8 @@ class JobApplication < ApplicationRecord
     belongs_to :user,
         foreign_key: :user_id,
         class_name: :User
+
+    has_many :interviews,
+        foreign_key: :application_id,
+        class_name: :Interview
 end

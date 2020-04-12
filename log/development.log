@@ -8387,3 +8387,217 @@ Processing by Api::JobApplicationsController#index as JSON
 Completed 200 OK in 41ms (Views: 37.4ms | ActiveRecord: 0.8ms)
 
 
+Started PATCH "/api/job_applications/10" for ::1 at 2020-04-11 18:58:23 -0700
+Processing by Api::JobApplicationsController#update as JSON
+  Parameters: {"job_application"=>{"status"=>"Applied"}, "id"=>"10"}
+  [1m[36mJobApplication Load (0.4ms)[0m  [1m[34mSELECT  "job_applications".* FROM "job_applications" WHERE "job_applications"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/job_applications_controller.rb:30
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[36mJobApplication Update (0.9ms)[0m  [1m[33mUPDATE "job_applications" SET "status" = $1, "updated_at" = $2 WHERE "job_applications"."id" = $3[0m  [["status", "Applied"], ["updated_at", "2020-04-12 01:58:23.900615"], ["id", 10]]
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  Rendering api/job_applications/show.json.jbuilder
+  Rendered api/job_applications/show.json.jbuilder (0.9ms)
+Completed 200 OK in 69ms (Views: 58.7ms | ActiveRecord: 2.6ms)
+
+
+Started PATCH "/api/job_applications/8" for ::1 at 2020-04-11 18:58:26 -0700
+Processing by Api::JobApplicationsController#update as JSON
+  Parameters: {"job_application"=>{"status"=>"Applied"}, "id"=>"8"}
+  [1m[36mJobApplication Load (0.4ms)[0m  [1m[34mSELECT  "job_applications".* FROM "job_applications" WHERE "job_applications"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/api/job_applications_controller.rb:30
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[36mJobApplication Update (0.5ms)[0m  [1m[33mUPDATE "job_applications" SET "status" = $1, "updated_at" = $2 WHERE "job_applications"."id" = $3[0m  [["status", "Applied"], ["updated_at", "2020-04-12 01:58:26.684755"], ["id", 8]]
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  Rendering api/job_applications/show.json.jbuilder
+  Rendered api/job_applications/show.json.jbuilder (0.9ms)
+Completed 200 OK in 16ms (Views: 8.2ms | ActiveRecord: 1.8ms)
+
+
+Started PATCH "/api/job_applications/11" for ::1 at 2020-04-11 18:58:29 -0700
+Processing by Api::JobApplicationsController#update as JSON
+  Parameters: {"job_application"=>{"status"=>"Applied"}, "id"=>"11"}
+  [1m[36mJobApplication Load (0.3ms)[0m  [1m[34mSELECT  "job_applications".* FROM "job_applications" WHERE "job_applications"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/job_applications_controller.rb:30
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[36mJobApplication Update (0.6ms)[0m  [1m[33mUPDATE "job_applications" SET "status" = $1, "updated_at" = $2 WHERE "job_applications"."id" = $3[0m  [["status", "Applied"], ["updated_at", "2020-04-12 01:58:29.044595"], ["id", 11]]
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/job_applications_controller.rb:31
+  Rendering api/job_applications/show.json.jbuilder
+  Rendered api/job_applications/show.json.jbuilder (0.6ms)
+Completed 200 OK in 16ms (Views: 8.9ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:02:03 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.8ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.8ms)
+Completed 200 OK in 1179ms (Views: 1177.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:02:06 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.4ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.5ms)
+Completed 200 OK in 61ms (Views: 59.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:02:41 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.6ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.9ms)
+Completed 200 OK in 193ms (Views: 191.8ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:02:42 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.6ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.9ms)
+Completed 200 OK in 668ms (Views: 666.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/api/job_applications" for ::1 at 2020-04-11 19:02:43 -0700
+Processing by Api::JobApplicationsController#index as JSON
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendering api/job_applications/index.json.jbuilder
+  [1m[36mJobApplication Load (0.4ms)[0m  [1m[34mSELECT "job_applications".* FROM "job_applications" WHERE "job_applications"."user_id" = $1[0m  [["user_id", 1]]
+  ↳ app/views/api/job_applications/index.json.jbuilder:1
+  Rendered api/job_applications/index.json.jbuilder (4.9ms)
+Completed 200 OK in 39ms (Views: 35.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:02:54 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.6ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.9ms)
+Completed 200 OK in 216ms (Views: 214.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/api/job_applications" for ::1 at 2020-04-11 19:02:55 -0700
+Processing by Api::JobApplicationsController#index as JSON
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendering api/job_applications/index.json.jbuilder
+  [1m[36mJobApplication Load (0.5ms)[0m  [1m[34mSELECT "job_applications".* FROM "job_applications" WHERE "job_applications"."user_id" = $1[0m  [["user_id", 1]]
+  ↳ app/views/api/job_applications/index.json.jbuilder:1
+  Rendered api/job_applications/index.json.jbuilder (5.7ms)
+Completed 200 OK in 55ms (Views: 50.6ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:03:15 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.5ms)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (1.2ms)
+Completed 200 OK in 894ms (Views: 892.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/api/job_applications" for ::1 at 2020-04-11 19:03:16 -0700
+Processing by Api::JobApplicationsController#index as JSON
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendering api/job_applications/index.json.jbuilder
+  [1m[36mJobApplication Load (0.4ms)[0m  [1m[34mSELECT "job_applications".* FROM "job_applications" WHERE "job_applications"."user_id" = $1[0m  [["user_id", 1]]
+  ↳ app/views/api/job_applications/index.json.jbuilder:1
+  Rendered api/job_applications/index.json.jbuilder (4.7ms)
+Completed 200 OK in 21ms (Views: 18.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:03:26 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (0.5ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.8ms)
+Completed 200 OK in 552ms (Views: 551.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/api/job_applications" for ::1 at 2020-04-11 19:03:27 -0700
+Processing by Api::JobApplicationsController#index as JSON
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendering api/job_applications/index.json.jbuilder
+  [1m[36mJobApplication Load (0.4ms)[0m  [1m[34mSELECT "job_applications".* FROM "job_applications" WHERE "job_applications"."user_id" = $1[0m  [["user_id", 1]]
+  ↳ app/views/api/job_applications/index.json.jbuilder:1
+  Rendered api/job_applications/index.json.jbuilder (5.2ms)
+Completed 200 OK in 21ms (Views: 17.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for ::1 at 2020-04-11 19:03:56 -0700
+Processing by StaticPagesController#root as HTML
+  Rendering static_pages/root.html.erb within layouts/application
+  Rendered static_pages/root.html.erb within layouts/application (1.0ms)
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendered api/users/_user.json.jbuilder (0.8ms)
+Completed 200 OK in 638ms (Views: 636.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/api/job_applications" for ::1 at 2020-04-11 19:03:57 -0700
+Processing by Api::JobApplicationsController#index as JSON
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."session_token" = $1 LIMIT $2[0m  [["session_token", "_tPdltWyOWgRT9o6ohR-zg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  Rendering api/job_applications/index.json.jbuilder
+  [1m[36mJobApplication Load (0.5ms)[0m  [1m[34mSELECT "job_applications".* FROM "job_applications" WHERE "job_applications"."user_id" = $1[0m  [["user_id", 1]]
+  ↳ app/views/api/job_applications/index.json.jbuilder:1
+  Rendered api/job_applications/index.json.jbuilder (4.8ms)
+Completed 200 OK in 21ms (Views: 17.3ms | ActiveRecord: 1.0ms)
+
+
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1986727222525260075)[0m
+  ↳ bin/rails:9
+  [1m[35m (55.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateInterviews (20200412020602)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (73.3ms)[0m  [1m[35mCREATE TABLE "interviews" ("id" bigserial primary key, "date" date, "time" time, "type" character varying, "application_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20200412020602_create_interviews.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200412020602"]]
+  ↳ bin/rails:9
+  [1m[35m (18.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1986727222525260075)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/alex/.rbenv/versions/2.5.1/bin/annotate:23
