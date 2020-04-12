@@ -71,6 +71,8 @@ class JobApplicationIndex extends React.Component {
 
     render() {
         const offers = this.props.jobApplications ? this.props.jobApplications.filter(el => el.status === "Offered").length : ""
+        const phoneScreens = this.props.jobApplications ? this.props.jobApplications.filter(el => el.status === "Phone Screen").length : ""
+        const onSites = this.props.jobApplications ? this.props.jobApplications.filter(el => el.status === "On-site").length : ""
         const applications = this.state.sort === "status" ? this.props.jobApplications.sort((a, b) => {
             if (a.status < b.status) return -1
             if (a.status > b.status) return 1
@@ -98,8 +100,8 @@ class JobApplicationIndex extends React.Component {
                     <div className="details">
                         <h2>DETAILS</h2>
                         <h3>Applications Submitted: {this.props.jobApplications.length}</h3>
-                        <h3>Phone Screens:</h3>
-                        <h3>On-sites:</h3>
+                        <h3>Phone Screens: {phoneScreens}</h3>
+                        <h3>On-sites: {onSites}</h3>
                         <h3>Offers: {offers}</h3>
                     </div>
                 </div>

@@ -447,7 +447,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var mSTP = function mSTP(state) {
   return {
-    interviews: Object.values(state.entities.interviews),
+    interviews: Object.values(state.entities.interviews).sort(function (a, b) {
+      return sortDate(a.date, b.date);
+    }).sort(function (a, b) {
+      return a.time.localeCompare(b.time);
+    }),
     applications: state.entities.jobApplications
   };
 };
@@ -471,6 +475,15 @@ var mDTP = function mDTP(dispatch) {
     }
   };
 };
+
+function sortDate(dateOne, dateTwo) {
+  var dateA = new Date(dateOne),
+      dateB = new Date(dateTwo);
+  return dateA - dateB;
+} // data.sort(function (a, b) {
+//     return a.time.localeCompare(b.time);
+// });
+
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_interview_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
@@ -1409,6 +1422,12 @@ var JobApplicationIndex = /*#__PURE__*/function (_React$Component) {
       var offers = this.props.jobApplications ? this.props.jobApplications.filter(function (el) {
         return el.status === "Offered";
       }).length : "";
+      var phoneScreens = this.props.jobApplications ? this.props.jobApplications.filter(function (el) {
+        return el.status === "Phone Screen";
+      }).length : "";
+      var onSites = this.props.jobApplications ? this.props.jobApplications.filter(function (el) {
+        return el.status === "On-site";
+      }).length : "";
       var applications = this.state.sort === "status" ? this.props.jobApplications.sort(function (a, b) {
         if (a.status < b.status) return -1;
         if (a.status > b.status) return 1;
@@ -1467,7 +1486,7 @@ var JobApplicationIndex = /*#__PURE__*/function (_React$Component) {
         type: "submit"
       }, "Add Application"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "details"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "DETAILS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Applications Submitted: ", this.props.jobApplications.length), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Phone Screens:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "On-sites:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Offers: ", offers))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sort by: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "DETAILS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Applications Submitted: ", this.props.jobApplications.length), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Phone Screens: ", phoneScreens), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "On-sites: ", onSites), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Offers: ", offers))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sort by: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "sort",
         onClick: function onClick() {
           return _this2.setState({
