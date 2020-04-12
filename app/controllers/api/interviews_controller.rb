@@ -7,6 +7,11 @@ class Api::InterviewsController < ApplicationController
         render :index
     end
 
+    def show
+        @interview = Interview.find(params[:id])
+        render :show
+    end
+
     def create
         @interview = Interview.new(interview_params)
         if @interview.save

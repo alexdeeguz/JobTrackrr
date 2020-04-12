@@ -31,7 +31,7 @@ class JobApplicationIndexItem extends React.Component {
         const { application_date, company_name, position, job_posting_url, company_site_url, status } = this.props.application
         return (
             <div className="job-app">
-                <select className="grid1" onChange={this.updateStatus}>
+                <select id="select" className="grid1" onChange={this.updateStatus}>
                     <option value={status}>{status}</option>
                     {status === "Applied" ? "" : <option value="Applied">Applied</option>}
                     {status === "Offered" ? "" : <option value="Offered">Offered</option>}

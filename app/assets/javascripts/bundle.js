@@ -152,9 +152,11 @@ var deleteInterview = function deleteInterview(id) {
   };
 };
 var updateInterview = function updateInterview(id, interview) {
-  return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["updateInterview"](id, interview).then(function (updatedInterview) {
-    return dispatch(receiveInterview(updatedInterview));
-  });
+  return function (dispatch) {
+    return _util_interview_utils__WEBPACK_IMPORTED_MODULE_0__["updateInterview"](id, interview).then(function (interview) {
+      return dispatch(receiveInterview(interview));
+    });
+  };
 };
 var createInterview = function createInterview(interview) {
   return function (dispatch) {
@@ -354,6 +356,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _containers_signup_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./containers/signup_container */ "./frontend/components/containers/signup_container.jsx");
 /* harmony import */ var _containers_job_application_index_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./containers/job_application_index_container */ "./frontend/components/containers/job_application_index_container.jsx");
 /* harmony import */ var _containers_interview_index_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./containers/interview_index_container */ "./frontend/components/containers/interview_index_container.jsx");
+/* harmony import */ var _containers_interview_show_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./containers/interview_show_container */ "./frontend/components/containers/interview_show_container.jsx");
+
 
 
 
@@ -373,6 +377,9 @@ var App = function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/applications",
     component: _containers_job_application_index_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    path: "/interviews/:id",
+    component: _containers_interview_show_container__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/interviews",
     component: _containers_interview_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -466,6 +473,49 @@ var mDTP = function mDTP(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_interview_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/containers/interview_show_container.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/containers/interview_show_container.jsx ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _interview_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../interview_show */ "./frontend/components/interview_show.jsx");
+/* harmony import */ var _actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/interview_actions */ "./frontend/actions/interview_actions.js");
+/* harmony import */ var _actions_job_application_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/job_application_actions */ "./frontend/actions/job_application_actions.js");
+
+
+
+
+
+var mSTP = function mSTP(state) {
+  return {
+    interviews: state.entities.interviews,
+    applications: state.entities.jobApplications
+  };
+};
+
+var mDTP = function mDTP(dispatch) {
+  return {
+    getInterview: function getInterview(id) {
+      return dispatch(Object(_actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__["getInterview"])(id));
+    },
+    updateInterview: function updateInterview(id, interview) {
+      return dispatch(Object(_actions_interview_actions__WEBPACK_IMPORTED_MODULE_2__["updateInterview"])(id, interview));
+    },
+    getJobApplications: function getJobApplications() {
+      return dispatch(Object(_actions_job_application_actions__WEBPACK_IMPORTED_MODULE_3__["getAllApplications"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_interview_show__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -842,6 +892,131 @@ var InterviewIndexItem = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./frontend/components/interview_show.jsx":
+/*!************************************************!*\
+  !*** ./frontend/components/interview_show.jsx ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var InterviewShow = /*#__PURE__*/function (_React$Component) {
+  _inherits(InterviewShow, _React$Component);
+
+  var _super = _createSuper(InterviewShow);
+
+  function InterviewShow(props) {
+    var _this;
+
+    _classCallCheck(this, InterviewShow);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      date: "",
+      time: "",
+      interview_type: ""
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(InterviewShow, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.props.getJobApplications();
+      this.props.getInterview(this.props.match.params.id);
+    }
+  }, {
+    key: "updateField",
+    value: function updateField(e, field) {
+      e.preventDefault();
+      this.setState(_defineProperty({}, field, e.target.value));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      this.props.updateInterview(this.props.match.params.id, this.state).then(function () {
+        return _this2.props.history.push('/interviews');
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      console.log(this.state);
+      var id = this.props.match.params.id;
+      var interview = this.props.interviews[id];
+      var application = interview ? this.props.applications[interview.application_id] : "";
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, application.company_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "date",
+        placeholder: "Interview Date",
+        value: this.state.date,
+        onChange: function onChange(e) {
+          return _this3.updateField(e, "date");
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Time: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "time",
+        value: this.state.time,
+        onChange: function onChange(e) {
+          return _this3.updateField(e, "time");
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: function onChange(e) {
+          return _this3.updateField(e, "interview_type");
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        disabled: true,
+        selected: true
+      }, "--Interview Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "phone"
+      }, "Phone"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "onsite"
+      }, "On-site")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleSubmit
+      }, "Update Interview"));
+    }
+  }]);
+
+  return InterviewShow;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (InterviewShow);
+
+/***/ }),
+
 /***/ "./frontend/components/job_application_index_item.jsx":
 /*!************************************************************!*\
   !*** ./frontend/components/job_application_index_item.jsx ***!
@@ -930,6 +1105,7 @@ var JobApplicationIndexItem = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "job-app"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "select",
         className: "grid1",
         onChange: this.updateStatus
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {

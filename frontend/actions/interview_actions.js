@@ -28,8 +28,8 @@ export const getInterview = id => dispatch => InterviewAPIUtil.fetchInterview(id
 export const deleteInterview = id => dispatch => InterviewAPIUtil.deleteInterview(id)
     .then(() => dispatch(removeInterview()))
 
-export const updateInterview = (id, interview) => InterviewAPIUtil.updateInterview(id, interview)
-    .then(updatedInterview => dispatch(receiveInterview(updatedInterview)))
+export const updateInterview = (id, interview) => dispatch => InterviewAPIUtil.updateInterview(id, interview)
+    .then(interview => dispatch(receiveInterview(interview)))
 
 export const createInterview = interview => dispatch => InterviewAPIUtil.createInterview(interview)
     .then(interview => dispatch(receiveInterview(interview)))
