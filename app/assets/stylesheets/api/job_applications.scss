@@ -1,3 +1,83 @@
-// Place all the styles related to the api/job_applications controller here.
+// Place all the styles related to the api/JobApplications controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container {
+    width: 50%;
+    text-align: center;
+}
+
+.form > input {
+    margin-bottom: 1%;
+}
+
+.button {
+    width: 40%;
+    margin-right: 10%;
+}
+
+  input[type="date"]:before {
+    content: attr(placeholder) !important;
+    color: #aaa;
+    margin-right: 0.5em;
+  }
+  input[type="date"]:focus:before,
+  input[type="date"]:valid:before {
+    content: "";
+  }
+
+  .add-and-details-container {
+      display: flex;
+  }
+
+  .details > h1 {
+      text-align: center;
+  }
+
+  .details {
+      width: 40%;
+      margin-left: 10%;
+  }
+
+  .job-app {
+      display: grid;
+      grid-template-columns: 10% 15% 15% 15% 15% 15%;
+      grid-gap: 3%;
+  }
+
+  .grid1 {
+      grid-column-start: 1;
+  }
+
+  .grid2 {
+      grid-column-start: 2;
+  }
+  .grid3 {
+      grid-column-start: 3;
+  }
+
+  .grid4 {
+      grid-column-start: 4;
+  }
+  .grid5 {
+      grid-column-start: 5;
+  }
+  .grid6 {
+      grid-column-start: 6;
+  }
+
+  select {
+    border: 1px solid #fff;
+    background-color: transparent;
+    outline: none;
+}
+
+#sort, button {
+    cursor: pointer;
+}
+

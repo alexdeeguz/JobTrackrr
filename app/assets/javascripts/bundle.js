@@ -86,6 +86,99 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/job_application_actions.js":
+/*!*****************************************************!*\
+  !*** ./frontend/actions/job_application_actions.js ***!
+  \*****************************************************/
+/*! exports provided: RECEIVE_ALL_APPLICATIONS, RECEIVE_APPLICATION, REMOVE_APPLICATION, getAllApplications, getApplication, deleteApplication, updateApplication, createApplication */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ALL_APPLICATIONS", function() { return RECEIVE_ALL_APPLICATIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_APPLICATION", function() { return RECEIVE_APPLICATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_APPLICATION", function() { return REMOVE_APPLICATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllApplications", function() { return getAllApplications; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getApplication", function() { return getApplication; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteApplication", function() { return deleteApplication; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateApplication", function() { return updateApplication; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createApplication", function() { return createApplication; });
+/* harmony import */ var _util_job_application_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/job_application_utils */ "./frontend/util/job_application_utils.js");
+/* harmony import */ var _session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_actions */ "./frontend/actions/session_actions.js");
+
+
+var RECEIVE_ALL_APPLICATIONS = "RECEIVE_ALL_APPLICATIONS";
+var RECEIVE_APPLICATION = "RECEIVE_APPLICATION";
+var REMOVE_APPLICATION = "REMOVE_APPLICATION";
+
+var receiveAllApplications = function receiveAllApplications(applications) {
+  return {
+    type: RECEIVE_ALL_APPLICATIONS,
+    applications: applications
+  };
+};
+
+var receiveApplication = function receiveApplication(application) {
+  return {
+    type: RECEIVE_APPLICATION,
+    application: application
+  };
+};
+
+var removeApplication = function removeApplication(id) {
+  return {
+    type: REMOVE_APPLICATION,
+    id: id
+  };
+};
+
+var receiveErrors = function receiveErrors(errors) {
+  return {
+    type: _session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ERRORS"],
+    errors: errors
+  };
+};
+
+var getAllApplications = function getAllApplications() {
+  return function (dispatch) {
+    return _util_job_application_utils__WEBPACK_IMPORTED_MODULE_0__["fetchAllApplications"]().then(function (applications) {
+      return dispatch(receiveAllApplications(applications));
+    });
+  };
+};
+var getApplication = function getApplication(id) {
+  return function (dispatch) {
+    return _util_job_application_utils__WEBPACK_IMPORTED_MODULE_0__["fetchJobApplication"](id).then(function (application) {
+      return dispatch(receiveApplication(application));
+    });
+  };
+};
+var deleteApplication = function deleteApplication(id) {
+  return function (dispatch) {
+    return _util_job_application_utils__WEBPACK_IMPORTED_MODULE_0__["deleteJobApplication"](id).then(function () {
+      return dispatch(removeApplication(id));
+    });
+  };
+};
+var updateApplication = function updateApplication(id, application) {
+  return function (dispatch) {
+    return _util_job_application_utils__WEBPACK_IMPORTED_MODULE_0__["updateJobApplication"](id, application).then(function (updatedApp) {
+      return dispatch(receiveApplication(updatedApp));
+    });
+  };
+};
+var createApplication = function createApplication(application) {
+  return function (dispatch) {
+    return _util_job_application_utils__WEBPACK_IMPORTED_MODULE_0__["createJobApplication"](application).then(function (createdApp) {
+      return dispatch(receiveApplication(createdApp));
+    }, function (error) {
+      return dispatch(receiveErrors(error.responseJSON));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -179,6 +272,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _containers_home_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./containers/home_container */ "./frontend/components/containers/home_container.jsx");
 /* harmony import */ var _containers_login_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./containers/login_container */ "./frontend/components/containers/login_container.jsx");
 /* harmony import */ var _containers_signup_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./containers/signup_container */ "./frontend/components/containers/signup_container.jsx");
+/* harmony import */ var _containers_job_application_index_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./containers/job_application_index_container */ "./frontend/components/containers/job_application_index_container.jsx");
+
 
 
 
@@ -193,6 +288,9 @@ var App = function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
     path: "/signup",
     component: _containers_signup_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    path: "/applications",
+    component: _containers_job_application_index_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/",
     component: _containers_home_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -234,6 +332,52 @@ var mDTP = function mDTP(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_home__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/containers/job_application_index_container.jsx":
+/*!****************************************************************************!*\
+  !*** ./frontend/components/containers/job_application_index_container.jsx ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _job_applications_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../job_applications_index */ "./frontend/components/job_applications_index.jsx");
+/* harmony import */ var _actions_job_application_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/job_application_actions */ "./frontend/actions/job_application_actions.js");
+
+
+
+
+var mSTP = function mSTP(state) {
+  return {
+    currentUser: state.entities.users[state.session.id],
+    jobApplications: Object.values(state.entities.jobApplications).sort(function (a, b) {
+      if (a.company_name < b.company_name) return -1;
+      if (a.company_name > b.company_name) return 1;
+      return 0;
+    }),
+    errors: state.errors.session
+  };
+};
+
+var mDTP = function mDTP(dispatch) {
+  return {
+    getJobApplications: function getJobApplications() {
+      return dispatch(Object(_actions_job_application_actions__WEBPACK_IMPORTED_MODULE_2__["getAllApplications"])());
+    },
+    createApplication: function createApplication(app) {
+      return dispatch(Object(_actions_job_application_actions__WEBPACK_IMPORTED_MODULE_2__["createApplication"])(app));
+    },
+    updateApplication: function updateApplication(id, app) {
+      return dispatch(Object(_actions_job_application_actions__WEBPACK_IMPORTED_MODULE_2__["updateApplication"])(id, app));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_job_applications_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -372,7 +516,6 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "HOME PAGE", this.props.currentUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.logout
       }, "Log out") : "");
@@ -383,6 +526,328 @@ var Home = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Home);
+
+/***/ }),
+
+/***/ "./frontend/components/job_application_index_item.jsx":
+/*!************************************************************!*\
+  !*** ./frontend/components/job_application_index_item.jsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var JobApplicationIndexItem = /*#__PURE__*/function (_React$Component) {
+  _inherits(JobApplicationIndexItem, _React$Component);
+
+  var _super = _createSuper(JobApplicationIndexItem);
+
+  function JobApplicationIndexItem(props) {
+    var _this;
+
+    _classCallCheck(this, JobApplicationIndexItem);
+
+    _this = _super.call(this, props);
+    _this.updateStatus = _this.updateStatus.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(JobApplicationIndexItem, [{
+    key: "updateStatus",
+    value: function updateStatus(e) {
+      e.preventDefault();
+      var id = this.props.application.id;
+      var application = {
+        status: e.target.value
+      };
+      this.props.updateApplication(id, application);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props$applicati = this.props.application,
+          application_date = _this$props$applicati.application_date,
+          company_name = _this$props$applicati.company_name,
+          position = _this$props$applicati.position,
+          job_posting_url = _this$props$applicati.job_posting_url,
+          company_site_url = _this$props$applicati.company_site_url,
+          status = _this$props$applicati.status;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "job-app"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "grid1",
+        onChange: this.updateStatus
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: status
+      }, status), status === "Applied" ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Applied"
+      }, "Applied"), status === "Offered" ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Offered"
+      }, "Offered"), status === "Rejected" ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Rejected"
+      }, "Rejected")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "grid2"
+      }, application_date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "grid3"
+      }, company_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "grid4"
+      }, position), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "grid5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: job_posting_url
+      }, "Job Posting")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "grid6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: company_site_url
+      }, "Company Site")));
+    }
+  }]);
+
+  return JobApplicationIndexItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (JobApplicationIndexItem);
+
+/***/ }),
+
+/***/ "./frontend/components/job_applications_index.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/job_applications_index.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _job_application_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./job_application_index_item */ "./frontend/components/job_application_index_item.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var JobApplicationIndex = /*#__PURE__*/function (_React$Component) {
+  _inherits(JobApplicationIndex, _React$Component);
+
+  var _super = _createSuper(JobApplicationIndex);
+
+  function JobApplicationIndex(props) {
+    var _this;
+
+    _classCallCheck(this, JobApplicationIndex);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      application_date: _this.dateToday(),
+      company_name: "",
+      position: "",
+      job_posting_url: "",
+      company_site_url: "",
+      status: "Applied",
+      user_id: _this.props.currentUser.id,
+      sort: "name"
+    };
+    _this.addApplication = _this.addApplication.bind(_assertThisInitialized(_this));
+    _this.updateField = _this.updateField.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(JobApplicationIndex, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.props.getJobApplications();
+    }
+  }, {
+    key: "addApplication",
+    value: function addApplication(e) {
+      e.preventDefault();
+      var app = {
+        application_date: this.state.application_date,
+        company_name: this.state.company_name,
+        position: this.state.position,
+        job_posting_url: this.state.job_posting_url,
+        company_site_url: this.state.company_site_url,
+        status: "Applied",
+        user_id: this.props.currentUser.id
+      };
+      this.props.createApplication(app);
+      this.setState({
+        application_date: this.dateToday(),
+        company_name: "",
+        position: "",
+        job_posting_url: "",
+        company_site_url: "",
+        status: "Applied",
+        user_id: this.props.currentUser.id
+      });
+    }
+  }, {
+    key: "updateField",
+    value: function updateField(e, field) {
+      e.preventDefault();
+      this.setState(_defineProperty({}, field, e.target.value));
+    }
+  }, {
+    key: "dateToday",
+    value: function dateToday() {
+      var date = new Date();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      var year = date.getFullYear();
+
+      if (month < 10) {
+        month = "0".concat(month);
+      }
+
+      if (day < 10) {
+        day = "0".concat(day);
+      }
+
+      return "".concat(year, "-").concat(month, "-").concat(day);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var offers = this.props.jobApplications ? this.props.jobApplications.filter(function (el) {
+        return el.status === "Offered";
+      }).length : "";
+      console.log(this.props.jobApplications);
+      var applications = this.state.sort === "status" ? this.props.jobApplications.sort(function (a, b) {
+        if (a.status < b.status) return -1;
+        if (a.status > b.status) return 1;
+        return 0;
+      }) : this.props.jobApplications.sort(function (a, b) {
+        if (a.company_name < b.company_name) return -1;
+        if (a.company_name > b.company_name) return 1;
+        return 0;
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "add-and-details-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "QUICK ADD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        onSubmit: this.addApplication
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "date",
+        placeholder: "Application Date",
+        onChange: function onChange(e) {
+          return _this2.updateField(e, "date");
+        },
+        value: this.state.application_date
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Company Name",
+        onChange: function onChange(e) {
+          return _this2.updateField(e, "company_name");
+        },
+        value: this.state.company_name
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Position",
+        onChange: function onChange(e) {
+          return _this2.updateField(e, "position");
+        },
+        value: this.state.position
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Job Posting URL",
+        onChange: function onChange(e) {
+          return _this2.updateField(e, "job_posting_url");
+        },
+        value: this.state.job_posting_url
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Company Site",
+        onChange: function onChange(e) {
+          return _this2.updateField(e, "company_site_url");
+        },
+        value: this.state.company_site_url
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "button",
+        type: "submit"
+      }, "Add Application"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "details"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "DETAILS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Applications Submitted: ", this.props.jobApplications.length), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Phone Screens:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "On-sites:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Offers: ", offers))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sort by: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "sort",
+        onClick: function onClick() {
+          return _this2.setState({
+            sort: "name"
+          });
+        }
+      }, "Name"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "sort",
+        onClick: function onClick() {
+          return _this2.setState({
+            sort: "status"
+          });
+        }
+      }, "Status")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, applications.map(function (application) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_job_application_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          key: application.id,
+          application: application,
+          updateApplication: _this2.props.updateApplication
+        });
+      })));
+    }
+  }]);
+
+  return JobApplicationIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (JobApplicationIndex);
 
 /***/ }),
 
@@ -585,10 +1050,13 @@ document.addEventListener('DOMContentLoaded', function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
+/* harmony import */ var _job_application_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./job_application_reducer */ "./frontend/reducers/job_application_reducer.js");
+
 
 
 var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  jobApplications: _job_application_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
 
@@ -611,6 +1079,45 @@ var ErrorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
   session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (ErrorsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/job_application_reducer.js":
+/*!******************************************************!*\
+  !*** ./frontend/reducers/job_application_reducer.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_job_application_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/job_application_actions */ "./frontend/actions/job_application_actions.js");
+
+
+var JobApplicationReducer = function JobApplicationReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_job_application_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_APPLICATIONS"]:
+      return action.applications;
+
+    case _actions_job_application_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_APPLICATION"]:
+      newState[action.application.id] = action.application;
+      return newState;
+
+    case _actions_job_application_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_APPLICATION"]:
+      delete newState[action.id];
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (JobApplicationReducer);
 
 /***/ }),
 
@@ -771,6 +1278,59 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/job_application_utils.js":
+/*!************************************************!*\
+  !*** ./frontend/util/job_application_utils.js ***!
+  \************************************************/
+/*! exports provided: fetchAllApplications, fetchJobApplication, createJobApplication, deleteJobApplication, updateJobApplication */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllApplications", function() { return fetchAllApplications; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchJobApplication", function() { return fetchJobApplication; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createJobApplication", function() { return createJobApplication; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteJobApplication", function() { return deleteJobApplication; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateJobApplication", function() { return updateJobApplication; });
+var fetchAllApplications = function fetchAllApplications() {
+  return $.ajax({
+    method: "GET",
+    url: '/api/job_applications'
+  });
+};
+var fetchJobApplication = function fetchJobApplication(id) {
+  return $.ajax({
+    method: "GET",
+    url: "/api/job_applications/".concat(id)
+  });
+};
+var createJobApplication = function createJobApplication(job_application) {
+  return $.ajax({
+    method: "POST",
+    url: '/api/job_applications',
+    data: {
+      job_application: job_application
+    }
+  });
+};
+var deleteJobApplication = function deleteJobApplication(id) {
+  return $.ajax({
+    method: "DELETE",
+    url: "/api/job_applications/".concat(id)
+  });
+};
+var updateJobApplication = function updateJobApplication(id, job_application) {
+  return $.ajax({
+    method: "PATCH",
+    url: "/api/job_applications/".concat(id),
+    data: {
+      job_application: job_application
+    }
+  });
+};
 
 /***/ }),
 
