@@ -5,7 +5,7 @@
 #  id             :bigint           not null, primary key
 #  date           :date
 #  time           :time
-#  type           :string
+#  interview_type :string
 #  application_id :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

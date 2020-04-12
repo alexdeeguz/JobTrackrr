@@ -5,6 +5,7 @@ class JobApplicationIndexItem extends React.Component {
         super(props)
 
         this.updateStatus = this.updateStatus.bind(this)
+        this.addInterview = this.addInterview.bind(this)
     }
 
     updateStatus(e) {
@@ -16,7 +17,17 @@ class JobApplicationIndexItem extends React.Component {
         this.props.updateApplication(id, application)
     }
 
+    addInterview(e) {
+        e.preventDefault()
+        const interview = {
+            application_id: this.props.application.id
+        }
+        this.props.createInterview(interview)
+            .then(() => this.props.history.push('/interviews'))
+    }
+
     render() {
+        console.log(this.props)
         const { application_date, company_name, position, job_posting_url, company_site_url, status } = this.props.application
         return (
             <div className="job-app">
@@ -31,6 +42,7 @@ class JobApplicationIndexItem extends React.Component {
                 <p className="grid4">{position}</p>
                 <p className="grid5"><a href={job_posting_url}>Job Posting</a></p>
                 <p className="grid6"><a href={company_site_url}>Company Site</a></p>
+                <p id="got-interview" onClick={this.addInterview} className="grid7">Got an interview</p>
             </div>
         )
     }

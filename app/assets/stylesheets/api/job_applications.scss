@@ -46,7 +46,7 @@
 
   .job-app {
       display: grid;
-      grid-template-columns: 10% 15% 15% 15% 15% 15%;
+      grid-template-columns: 10% 13% 13% 13% 10% 10% 10%;
       grid-gap: 3%;
   }
 
@@ -71,13 +71,17 @@
       grid-column-start: 6;
   }
 
+  .grid7 {
+      grid-column-start: 7;
+  }
+
   select {
     border: 1px solid #fff;
     background-color: transparent;
     outline: none;
 }
 
-#sort, button {
+#sort, button, #got-interview {
     cursor: pointer;
 }
 

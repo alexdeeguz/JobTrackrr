@@ -67,6 +67,7 @@ class JobApplicationIndex extends React.Component {
         return `${year}-${month}-${day}`
     }
 
+
     render() {
         const offers = this.props.jobApplications ? this.props.jobApplications.filter(el => el.status === "Offered").length : ""
         console.log(this.props.jobApplications)
@@ -107,7 +108,13 @@ class JobApplicationIndex extends React.Component {
                 <div>
                 {
                     applications.map(application => (
-                    <JobApplicationIndexItem key={application.id} application={application} updateApplication={this.props.updateApplication}/>
+                    <JobApplicationIndexItem 
+                        key={application.id} 
+                        application={application} 
+                        updateApplication={this.props.updateApplication} 
+                        createInterview={this.props.createInterview}
+                        history={this.props.history}
+                    />
                     ))
                 }
                 </div>

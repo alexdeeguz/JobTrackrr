@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import JobApplicationsIndex from '../job_applications_index'
 import { getAllApplications, createApplication, updateApplication } from '../../actions/job_application_actions'
+import { createInterview } from '../../actions/interview_actions'
 
 const mSTP = state => ({
     currentUser: state.entities.users[state.session.id],
@@ -15,7 +16,8 @@ const mSTP = state => ({
 const mDTP = dispatch => ({
     getJobApplications: () => dispatch(getAllApplications()),
     createApplication: app => dispatch(createApplication(app)),
-    updateApplication: (id, app) => dispatch(updateApplication(id, app))
+    updateApplication: (id, app) => dispatch(updateApplication(id, app)),
+    createInterview: interview => dispatch(createInterview(interview))
 })
 
 export default connect(mSTP, mDTP)(JobApplicationsIndex)

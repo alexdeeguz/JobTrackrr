@@ -1,3 +1,62 @@
 // Place all the styles related to the api/interviews controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.modal {
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    position: absolute;
+    z-index: 1;
+    padding: 20px;
+    width: 45vw;
+    background-color: white;
+    color: black;
+    height: 65vh;
+    overflow-y: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.close {
+    font-size: 5vh;
+    cursor: pointer;
+    color: black;
+    &:hover {
+        color: gray;
+    }
+    float: right;
+}
+
+.interview {
+      display: grid;
+      grid-template-columns: 10% 15% 15% 15%;
+      grid-gap: 3%;
+}
