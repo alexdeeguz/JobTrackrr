@@ -12,7 +12,6 @@ class Header extends React.Component {
     }
 
     render() {
-        console.log(this.props.history)
         return (
             <div className="header">
                 <h1 className={this.props.history.location.pathname === "/applications" ? "selected" : "non-selected"} onClick={(e) => this.redirect(e, '/applications')}>Applications</h1>

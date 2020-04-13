@@ -4,6 +4,14 @@ class InterviewIndexItem extends React.Component {
     constructor(props) {
         super(props)
         this.cancelInterview = this.cancelInterview.bind(this)
+        this.convertDate = this.convertDate.bind(this)
+    }
+
+    convertDate(date) {
+        date = date.split("-")
+        date[date.length-1] = String(Number(date[date.length-1])+1)
+        date = new Date(date.join("-"))
+        return date.toString().split(" ").slice(0,4).join(" ")
     }
 
     cancelInterview(e) {
@@ -45,7 +53,7 @@ class InterviewIndexItem extends React.Component {
         return (
             <div className="interview">
                 <p className="grid1">{name}</p>
-                <p className="grid2">{date}</p>
+                <p className="grid2">{this.convertDate(date)}</p>
                 <p className="grid3">{this.convertTime(time)}</p>
                 <p className="grid4">{interview_type}</p>
                 <p id="cancel-button" className="grid5" onClick={this.cancelInterview}>Cancel Interview</p>

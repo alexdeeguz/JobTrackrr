@@ -448,9 +448,7 @@ __webpack_require__.r(__webpack_exports__);
 var mSTP = function mSTP(state) {
   return {
     interviews: Object.values(state.entities.interviews).sort(function (a, b) {
-      return sortDate(a.date, b.date);
-    }).sort(function (a, b) {
-      return a.time.localeCompare(b.time);
+      return sortDate(a.date, b.date, a.time, b.time);
     }),
     applications: state.entities.jobApplications
   };
@@ -476,14 +474,16 @@ var mDTP = function mDTP(dispatch) {
   };
 };
 
-function sortDate(dateOne, dateTwo) {
+function sortDate(dateOne, dateTwo, timeOne, timeTwo) {
   var dateA = new Date(dateOne),
       dateB = new Date(dateTwo);
-  return dateA - dateB;
-} // data.sort(function (a, b) {
-//     return a.time.localeCompare(b.time);
-// });
 
+  if (dateA === dateB) {
+    timeOne.localeCompare(timeTwo);
+  } else {
+    return dateA - dateB;
+  }
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mSTP, mDTP)(_interview_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
@@ -723,7 +723,6 @@ var Header = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.props.history);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -876,20 +875,125 @@ var InterviewIndex = /*#__PURE__*/function (_React$Component) {
       this.props.getJobApplications();
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "getNextPhoneScreenInterview",
+    value: function getNextPhoneScreenInterview() {
       var _this = this;
 
+      if (this.props.interviews.length > 0) {
+        var dateToday = new Date();
+        var interviews = this.props.interviews;
+        var apps = this.props.applications;
+        var future = interviews.filter(function (el) {
+          return el.interview_type === "Phone Screen";
+        });
+        if (future.length === 0) return null;
+        future.filter(function (el) {
+          return dateToday <= new Date(_this.convertDate(el.date));
+        });
+        future.sort(function (a, b) {
+          return a - b;
+        });
+        var company = apps[future[0].application_id] ? apps[future[0].application_id].company_name : "";
+        var date = this.convertDateToString(future[0].date);
+        var time = this.convertTime(future[0].time);
+        return [date, company, time];
+      }
+    }
+  }, {
+    key: "getNextOnSiteInterview",
+    value: function getNextOnSiteInterview() {
+      var _this2 = this;
+
+      if (this.props.interviews.length > 0) {
+        var dateToday = new Date();
+        var interviews = this.props.interviews;
+        var apps = this.props.applications;
+        var future = interviews.filter(function (el) {
+          return el.interview_type === "On-site";
+        });
+        console.log(future);
+        if (future.length === 0) return null;
+        future.filter(function (el) {
+          return dateToday <= new Date(_this2.convertDate(el.date));
+        });
+        future.sort(function (a, b) {
+          return a - b;
+        });
+        var company = apps[future[0].application_id] ? apps[future[0].application_id].company_name : "";
+        var date = this.convertDateToString(future[0].date);
+        var time = this.convertTime(future[0].time);
+        return [date, company, time];
+      }
+    }
+  }, {
+    key: "convertTime",
+    value: function convertTime(str) {
+      if (str === null) return null;
+      str = str.split("T");
+      str = str[1].slice(0, 5);
+      var times = str.split(":");
+      var hours = Number(times[0]);
+      var minutes = Number(times[1]);
+      var daylight;
+
+      if (hours > 12) {
+        hours = hours % 12;
+        daylight = "PM";
+      } else if (hours === 12) {
+        hours = String(12);
+        daylight = "PM";
+      } else if (hours === 0) {
+        hours = String(12);
+        daylight = "AM";
+      } else {
+        daylight = "AM";
+      }
+
+      if (minutes < 9) {
+        minutes = "0" + String(minutes);
+      }
+
+      return "".concat(hours, ":").concat(minutes, " ").concat(daylight);
+    }
+  }, {
+    key: "convertDate",
+    value: function convertDate(date) {
+      date = date.split("-");
+      date[date.length - 1] = String(Number(date[date.length - 1]) + 1);
+      date = new Date(date.join("-"));
+      return date;
+    }
+  }, {
+    key: "convertDateToString",
+    value: function convertDateToString(date) {
+      date = date.split("-");
+      date[date.length - 1] = String(Number(date[date.length - 1]) + 1);
+      date = new Date(date.join("-"));
+      return date.toString().split(" ").slice(0, 4).join(" ");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var nextPhoneScreen = this.getNextPhoneScreenInterview() ? this.getNextPhoneScreenInterview()[0] : "";
+      var phoneScreenCompany = this.getNextPhoneScreenInterview() ? this.getNextPhoneScreenInterview()[1] : "";
+      var phoneScreenTime = this.getNextPhoneScreenInterview() ? this.getNextPhoneScreenInterview()[2] : "";
+      var nextonSite = this.getNextOnSiteInterview() ? this.getNextOnSiteInterview()[0] : "";
+      var onSiteCompany = this.getNextOnSiteInterview() ? this.getNextOnSiteInterview()[1] : "";
+      var onSiteTime = this.getNextOnSiteInterview() ? this.getNextOnSiteInterview()[2] : "";
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header__WEBPACK_IMPORTED_MODULE_2__["default"], {
         history: this.props.history
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your next phone screen is on "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your next on-site is on ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.interviews.map(function (interview) {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "future-details"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your next phone screen is on ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, nextPhoneScreen), " at ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, phoneScreenTime), " with ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, phoneScreenCompany)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your next on-site is on ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, nextonSite), " at ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, onSiteCompany), " with ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, onSiteTime))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.interviews.map(function (interview) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_interview_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: interview.id,
           interview: interview,
-          getApplications: _this.props.getJobApplications,
-          applications: _this.props.applications,
-          cancelInterview: _this.props.cancelInterview,
-          getAllInterviews: _this.props.getAllInterviews
+          getApplications: _this3.props.getJobApplications,
+          applications: _this3.props.applications,
+          cancelInterview: _this3.props.cancelInterview,
+          getAllInterviews: _this3.props.getAllInterviews
         });
       })));
     }
@@ -949,10 +1053,19 @@ var InterviewIndexItem = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.cancelInterview = _this.cancelInterview.bind(_assertThisInitialized(_this));
+    _this.convertDate = _this.convertDate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(InterviewIndexItem, [{
+    key: "convertDate",
+    value: function convertDate(date) {
+      date = date.split("-");
+      date[date.length - 1] = String(Number(date[date.length - 1]) + 1);
+      date = new Date(date.join("-"));
+      return date.toString().split(" ").slice(0, 4).join(" ");
+    }
+  }, {
     key: "cancelInterview",
     value: function cancelInterview(e) {
       var _this2 = this;
@@ -1007,7 +1120,7 @@ var InterviewIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "grid1"
       }, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "grid2"
-      }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, this.convertDate(date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "grid3"
       }, this.convertTime(time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "grid4"
